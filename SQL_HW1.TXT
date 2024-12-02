@@ -27,7 +27,7 @@ WHERE price<600 AND (cd='12x' or cd='24x')
 SELECT DISTINCT Product.maker, Laptop.speed
 FROM Product 
 JOIN Laptop ON Product.model=Laptop.model
-WHERE Laptop.hd>=10 AND product.type='laptop'
+WHERE Laptop.hd >= 10
 <-------------------------------------------------->
 Задание 7.
 Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква).
