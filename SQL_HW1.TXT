@@ -111,3 +111,58 @@ WHERE numGuns>=10
 SELECT hd FROM PC
 GROUP BY hd
 HAVING COUNT(hd)>=2
+
+<-------------------------3RD WEEK------------------------->
+
+Задание 16.
+Найдите пары моделей PC, имеющих одинаковые скорость и RAM. 
+В результате каждая пара указывается только один раз, т.е. (i,j), но не (j,i), 
+Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
+
+Решение:
+SELECT DISTINCT p1.model, p2.model, p1.speed, p1.ram
+FROM PC p1, PC p2
+WHERE p1.speed=p2.speed
+AND p1.ram=p2.ram
+AND p1.model>p2.model
+<-------------------------------------------------->
+Задание 17.
+Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
+Вывести: type, model, speed
+
+Решение:
+SELECT DISTINCT p.type, l.model, l.speed
+FROM Laptop l, product p
+WHERE speed<ALL (SELECT speed FROM PC) AND type='laptop'
+<-------------------------------------------------->
+Задание 18.
+Найдите производителей самых дешевых цветных принтеров. Вывести: maker, price
+
+Решение:
+SELECT DISTINCT p.maker, pr.price
+FROM Product p, Printer pr
+WHERE p.model=pr.model
+AND pr.color='y'
+AND pr.price=(SELECT MIN(price) FROM printer
+WHERE printer.color='y')
+<-------------------------------------------------->
+Задание 19.
+Для каждого производителя, имеющего модели в таблице Laptop, 
+найдите средний размер экрана выпускаемых им ПК-блокнотов.
+Вывести: maker, средний размер экрана.
+
+Решение:
+SELECT product.maker, avg(screen) AS screen
+FROM Laptop
+JOIN product ON product.model = laptop.model
+GROUP BY product.maker
+<-------------------------------------------------->
+Задание 20.
+Найдите производителей, выпускающих по меньшей мере три различных модели ПК. Вывести: Maker, число моделей ПК.
+
+Решение:
+SELECT maker, COUNT(model) AS QTYmodel --кол-во
+FROM product
+WHERE type='pc'
+GROUP BY product.maker
+HAVING COUNT(DISTINCT model)>=3
